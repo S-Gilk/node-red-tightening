@@ -2,11 +2,14 @@
 set -e
 if [ -z "$PORT" ]; then PORT=2244; fi
 export PORT
-if [ ! -f $SNAP_COMMON/hello.conf ]; then
-    touch $SNAP_COMMON/hello.conf
-    echo "NEW - Copy settings.js to "$SNAP_COMMON
-    cp $SNAP/bin/conf/settings.js $SNAP_COMMON/
+if [ ! -f $SNAP_DATA/hello.conf ]; then
+    touch $SNAP_DATA/hello.conf
+    echo "NEW - Copy settings.js to "$SNAP_DATA
+    cp $SNAP/bin/conf/settings.js $SNAP_DATA/
     cp $SNAP/bin/conf/flows.json $SNAP_COMMON/
+    mkdir $SNAP_DATA/node_modules
+    cp -r $SNAP/lib/node_modules/lodash $SNAP_DATA/node_modules
+    cp $SNAP/bin/conf/package.json $SNAP_DATA/
 fi
-echo NOW STARTING NODE-RED : $SNAP/bin/node-red -u $SNAP_COMMON on port $PORT
-"$SNAP"/bin/node "$SNAP"/lib/node_modules/.bin/node-red -u "$SNAP_COMMON" "$SNAP_COMMON/flows.json"
+echo NOW STARTING NODE-RED : $SNAP/bin/node-red -u $SNAP_DATA on port $PORT
+"$SNAP"/bin/node "$SNAP"/lib/node_modules/.bin/node-red -u "$SNAP_DATA" "$SNAP_COMMON/flows.json"

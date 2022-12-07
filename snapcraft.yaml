@@ -1,20 +1,14 @@
-name: node-red-demo
+name: node-red-tightening
 adopt-info: node-red
-summary: Low-code programming for event-driven applications
+summary: Node-red modded for Bosch-Rexroth Tightening applications
 description: |
-        Node-RED is a flow based programming application for wiring together hardware devices, APIs and online services in new and interesting ways. For more information see http://nodered.org 
-        
-        ### Modifications
-        
-        Listens on port 1881 and runs as as service in strict mode by default.
-        Fully configurable on port 1882: edit **settings.js** directly from a webpage!
+  Node-RED is a flow based programming application for wiring together hardware devices, APIs and online services in new and interesting ways. For more information see http://nodered.org 
 
-        The snap by default comes with the following packages installed
-        node-red dashboard
-        CtrlX-Automation-Contrib
-        OPCUA contrib
-        MongoDB3
-        Influxdb 
+  ### Modifications
+
+  The snap by default comes with the following packages installed
+  node-red dashboard
+  CtrlX-Automation-Contrib
 
 confinement: strict
 grade: stable
@@ -22,7 +16,6 @@ base: core20
 
 # Limit architectures as ppcel64 doesn't build currently
 architectures:
-  - build-on: amd64
   - build-on: arm64
 
 apps:
@@ -43,10 +36,7 @@ apps:
       - pulseaudio
       - removable-media
       - serial-port
-      
 
-  
-      
   npm:
     command: bin/npm
     plugs:
@@ -56,36 +46,35 @@ apps:
     command: bin/desktop-launch
     plugs:
       - desktop
-      
+
 slots:
   package-assets:
     content: package-assets
     interface: content
     source:
       read:
-      - $SNAP/bin/package-assets/node-red-demo
-      
-parts:
+        - $SNAP/bin/package-assets/node-red-demo
 
+parts:
   node: # We dump in a specific version of node/npm from upstream.
     plugin: dump
-    source: 
+    source:
       - on amd64: https://nodejs.org/dist/v14.15.4/node-v14.15.4-linux-x64.tar.gz
       - on arm64: https://nodejs.org/dist/v14.15.4/node-v14.15.4-linux-arm64.tar.gz
-     
-     
+
   node-red:
     after: [node]
     plugin: nil # We use the nil plugin so we can fully override the build with whatever we need to do
     source: .
     stage-packages:
       - python
-    override-build: | # Whatever steps needed to install node-red into the install folder, which gets incorporated into the snap
+    override-build:
+      | # Whatever steps needed to install node-red into the install folder, which gets incorporated into the snap
       PATH=$PATH:../npm/bin
       apt-get install libatomic1
       npm config set unsafe-perm True
       # npm install --prefix $SNAPCRAFT_PART_INSTALL/lib
-      npm install --no-audit --no-fund --prefix $SNAPCRAFT_PART_INSTALL/lib node-red@2.1.3 node-red-node-ping node-red-node-random node-red-node-rbe node-red-node-serialport node-red-dashboard node-red-contrib-opcua node-red-contrib-influxdb node-red-contrib-mongodb3 node-red-contrib-ctrlx-automation node-red-contrib-s7 node-red-contrib-cip-ethernet-ip node-red-contrib-modbus node-red-contrib-opcda-client
+      npm install --no-audit --no-fund --prefix $SNAPCRAFT_PART_INSTALL/lib node-red@2.1.3 node-red-node-ping lodash
       find $SNAPCRAFT_PART_INSTALL -type f -name '*.js.swp' -delete
       find $SNAPCRAFT_PART_INSTALL/lib/node_modules -type d -name test -prune -exec rm -rf {} \;
       find $SNAPCRAFT_PART_INSTALL/lib/node_modules -type d -name doc -prune -exec rm -rf {} \;
@@ -112,10 +101,9 @@ parts:
       VER=$(npm show node-red version)
       echo "VERSION $(npm show node-red version)"
       snapcraftctl set-version $VER
-      
+
   scripts:
     plugin: dump
     source: scripts # snapcraft now prefers local parts to be in snap/local
     organize:
-      '*': "bin/"
-     
+      "*": "bin/"
