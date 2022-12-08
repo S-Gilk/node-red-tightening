@@ -1,5 +1,9 @@
 # Node-RED Snap template
 
+Adapted from https://github.com/node-red/node-red
+
+- Original author mauringo
+- Mods for tightening S-Gilk
 
 ## Modding
 
@@ -11,12 +15,10 @@ Modify files "flows.json" and "settings.js" in scripts/conf to customize the nod
     sudo snap install multipass
     sudo snap install snapcraft --classic
     snapcraft
-    
 
 ## Building - VM
-   
+
     sudo chmod 777 -R *
     sudo snap install lxd
     sudo lxd init -> confirm all defaults
     snapcraft --use-lxd
-    

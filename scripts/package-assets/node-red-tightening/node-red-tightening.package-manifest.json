@@ -1,0 +1,48 @@
+{
+  "version": "1.3.0",
+  "id": "NRTIGHTENING",
+  "services": {
+    "proxyMapping": [
+      {
+        "name": "Node-Red-Tightening",
+        "url": "/node-red-tightening",
+        "binding": ":2244",
+        "restricted": []
+      }
+    ]
+  },
+  "menus": {
+    "sidebar": [
+      {
+        "id": "node-red-tightening",
+        "title": "Node-RED-Tightening",
+        "icon": "ctrlx-ic-node-red",
+        "permissions": [],
+        "items": [
+          {
+            "id": "node-red-admin-tightening",
+            "title": "Flow Editor",
+            "link": "/node-red-tightening/",
+            "permissions": []
+          },
+          {
+            "id": "node-red-dashboard-tightening",
+            "title": "Dashboard",
+            "link": "/node-red-tightening/ui",
+            "permissions": []
+          }
+        ]
+      }
+    ],
+    "settings": [],
+    "overview": [
+      {
+        "id": "Node-Red-Tightening",
+        "title": "Node-RED-Tightening Dashboard",
+        "icon": "bosch-ic-desktop-graph",
+        "link": "/node-red-tightening/ui",
+        "permissions": []
+      }
+    ]
+  }
+}

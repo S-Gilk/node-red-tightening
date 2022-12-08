@@ -1,6 +1,6 @@
 name: node-red-tightening
 adopt-info: node-red
-summary: Node-red modded for Bosch-Rexroth Tightening applications
+summary: Node-RED for Bosch Rexroth tightening
 description: |
   Node-RED is a flow based programming application for wiring together hardware devices, APIs and online services in new and interesting ways. For more information see http://nodered.org 
 
@@ -9,6 +9,7 @@ description: |
   The snap by default comes with the following packages installed
   node-red dashboard
   CtrlX-Automation-Contrib
+  lodash
 
 confinement: strict
 grade: stable
@@ -53,7 +54,7 @@ slots:
     interface: content
     source:
       read:
-        - $SNAP/bin/package-assets/node-red-demo
+        - $SNAP/bin/package-assets/node-red-tightening
 
 parts:
   node: # We dump in a specific version of node/npm from upstream.
@@ -74,7 +75,7 @@ parts:
       apt-get install libatomic1
       npm config set unsafe-perm True
       # npm install --prefix $SNAPCRAFT_PART_INSTALL/lib
-      npm install --no-audit --no-fund --prefix $SNAPCRAFT_PART_INSTALL/lib node-red@2.1.3 node-red-node-ping lodash
+      npm install --no-audit --no-fund --prefix $SNAPCRAFT_PART_INSTALL/lib node-red@2.1.3 node-red-node-ping node-red-dashboard node-red-contrib-ctrlx-automation lodash
       find $SNAPCRAFT_PART_INSTALL -type f -name '*.js.swp' -delete
       find $SNAPCRAFT_PART_INSTALL/lib/node_modules -type d -name test -prune -exec rm -rf {} \;
       find $SNAPCRAFT_PART_INSTALL/lib/node_modules -type d -name doc -prune -exec rm -rf {} \;
