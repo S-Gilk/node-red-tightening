@@ -17,7 +17,7 @@ base: core20
 
 # Limit architectures as ppcel64 doesn't build currently
 architectures:
-  - build-on: arm64
+  - arm64
 
 apps:
   node-red:

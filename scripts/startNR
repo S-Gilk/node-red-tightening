@@ -1,5 +1,6 @@
 #!/bin/sh
 set -e
+echo STARTING...
 if [ -z "$PORT" ]; then PORT=2244; fi
 export PORT
 if [ ! -f $SNAP_DATA/hello.conf ]; then
@@ -7,6 +8,8 @@ if [ ! -f $SNAP_DATA/hello.conf ]; then
     echo "NEW - Copy settings.js to "$SNAP_DATA
     cp $SNAP/bin/conf/settings.js $SNAP_DATA/
     cp $SNAP/bin/conf/flows.json $SNAP_COMMON/
+    cp -r $SNAP/bin/conf/js $SNAP_COMMON/js
+    cp -r $SNAP/bin/conf/css $SNAP_COMMON/css
     mkdir $SNAP_DATA/node_modules
     cp -r $SNAP/lib/node_modules/lodash $SNAP_DATA/node_modules
     cp $SNAP/bin/conf/package.json $SNAP_DATA/
